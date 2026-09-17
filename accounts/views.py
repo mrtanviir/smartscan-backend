@@ -262,7 +262,9 @@ class CustomerNotificationMarkReadView(APIView):
             CustomerNotification.objects.filter(user=request.user, is_read=False).update(is_read=True)
             return api_response(status=True, message='সকল নোটিফিকেশন পঠিত হিসেবে চিহ্নিত হয়েছে', data={'all_read': True}, code=status.HTTP_200_OK)
 
-    def post(self, request):
+    def post(self, request, pk=None):
+        if pk:
+            return self.patch(request, pk=pk)
         CustomerNotification.objects.filter(user=request.user, is_read=False).update(is_read=True)
         return api_response(status=True, message='সকল নোটিফিকেশন পঠিত হিসেবে চিহ্নিত হয়েছে', data={'all_read': True}, code=status.HTTP_200_OK)
 
